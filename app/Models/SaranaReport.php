@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,22 +12,22 @@ class SaranaReport extends Model
     use HasFactory;
 
     protected $fillable = [
-       'sarpras_id', 'user_mhs_id', 'location', 'date', 'report', 'attachment', 'slug'
+       'sarpras_id', 'user_mhs_id', 'location', 'date', 'report', 'attachment', 'slug', 'statuses_id'
     ];
 
     public function sarpras()
     {
-        return $this->belongsTo(Sarpras::class);
+        return $this->belongsTo(Sarpras::class, 'sarpras_id');
     }
 
     public function userMhs()
     {
-        return $this->belongsTo(UserMhs::class);
+        return $this->belongsTo(User::class, 'user_mhs_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'statuses_id');
     }
 
     protected function attachment(): Attribute
@@ -39,14 +40,14 @@ class SaranaReport extends Model
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('d-M-Y'),
+            get: fn ($value) => Carbon::parse($value)->format('d-M-Y H:i'),
         );
     }
 
     protected function updatedAt(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('d-M-Y'),
+            get: fn ($value) => Carbon::parse($value)->format('d-M-Y H:i'),
         );
     }
 }

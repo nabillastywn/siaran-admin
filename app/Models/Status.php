@@ -42,7 +42,7 @@ class Status extends Model
      */
     public function sarprasReport()
     {
-        return $this->hasMany(SarprasReport::class);
+        return $this->hasMany(SaranaReport::class);
     }
     /**
      * sexual report

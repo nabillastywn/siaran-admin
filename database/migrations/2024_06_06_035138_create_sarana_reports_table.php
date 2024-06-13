@@ -10,15 +10,19 @@ return new class extends Migration
     {
         Schema::create('sarana_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('sarpras_id');
-            $table->unsignedInteger('user_mhs_id');
+            $table->unsignedBigInteger('sarpras_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('location');
             $table->date('date');
-            $table->string('report');
-            $table->string('attachment');
-            $table->string('slug');
-            $table->unsignedInteger('statuses_id');
+            $table->text('report');
+            $table->string('attachment')->nullable();
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
+
+            $table->foreign('sarpras_id')->references('id')->on('sarpras')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
         });
     }
 

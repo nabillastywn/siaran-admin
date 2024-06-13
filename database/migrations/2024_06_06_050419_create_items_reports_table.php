@@ -6,37 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('items_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lost_items_id');
-            $table->unsignedBigInteger('user_mhs_id');
+            $table->unsignedBigInteger('lost_item_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('location');
             $table->date('date');
             $table->string('name');
-            $table->string('description');
-            $table->string('attachment');
-            $table->string('slug');
-            $table->unsignedBigInteger('statuses_id');
+            $table->text('description');
+            $table->string('attachment')->nullable();
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
 
-            $table->foreign('lost_items_id')->references('id')->on('lost_items')->onDelete('cascade');
-            $table->foreign('user_mhs_id')->references('id')->on('user_mhs')->onDelete('cascade');
-            $table->foreign('statuses_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('lost_item_id')->references('id')->on('lost_items')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('items_reports');

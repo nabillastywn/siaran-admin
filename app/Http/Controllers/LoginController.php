@@ -3,38 +3,84 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class RegisterController extends Controller
+class LoginController extends Controller
 {
-    public function create()
+    public function show()
     {
-        // Hanya admin yang bisa mengakses halaman ini
-        if (!auth()->check() || auth()->user()->role !== 0) {
-            return redirect('/login')->withErrors(['You are not authorized to access this page.']);
-        }
-
-        return view('auth.register');
+        return view('auth.login');
     }
 
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        // Hanya admin yang bisa mengakses metode ini
-        if (!auth()->check() || auth()->user()->role !== 0) {
-            return redirect('/login')->withErrors(['You are not authorized to access this page.']);
-        }
-
         $attributes = $request->validate([
-            'username' => 'required|max:255|min:2',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:5|max:255',
-            'role' => 'required|in:1,2', // Hanya `user_pic` dan mahasiswa yang bisa didaftarkan
-            'terms' => 'required'
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
+        $user = User::where('email', $request->email)->first();
 
-        $user = User::create($attributes);
-        auth()->login($user);
+        // dd($user->password);
+        // try {
+        //     dd($request->password);
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
+        
+        // try {
+        //     dd(Hash::make($request->password));
+        //     dd($user->password);
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
+        
+        // try {
+        //     dd(Hash::check($user->password, $request->password));
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
+        
 
-        return redirect('/dashboard');
+        if (Hash::check($request->password, $user->password)) {
+            dd($user->role);
+            if ($user->role == 0) {
+            // $request->session()->regenerate();
+            Auth::login($user);
+
+            // dd($user);
+
+            return redirect()->intended('dashboard');
+            } else {
+                return back()->withErrors(['role' => 'Access denied! Only admin can login.']);
+            }
+        } else {
+            return back()->withErrors(['email' => 'Invalid credentials.']);
+        };
+
+        // if (Auth::attempt(['email' => 'siaran@gmail.com', 'password'=> 'siaran', 'role'=> 0])) {
+        //     $request->session()->regenerate();
+
+        //     return redirect()->intended('dashboard');
+        // }
+        // else {
+        //     return back()->withErrors([
+        //         'email' => 'The provided credentials do not match our records.',
+        //     ]);
+        // }
+
+       
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

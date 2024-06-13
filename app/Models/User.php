@@ -8,16 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'username',
         'name',
@@ -33,41 +29,20 @@ class User extends Authenticatable
         'role'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Always encrypt the password when it is updated.
-     *
-     * @param string $value
-     * @return void
-     */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = Hash::make($value);
     }
 
-    /**
-     * Relasi berdasarkan role.
-     *
-     * @return bool
-     */
     public function isAdmin()
     {
         return $this->role == 0;
@@ -83,51 +58,26 @@ class User extends Authenticatable
         return $this->role == 2;
     }
 
-    /**
-     * items report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function itemsReport()
+    public function itemsReports()
     {
-        return $this->hasMany(ItemsReport::class);
+        return $this->hasMany(ItemsReport::class, 'user_mhs_id');
     }
 
-    /**
-     * bullying report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function bullyingReport()
+    public function bullyingReports()
     {
-        return $this->hasMany(BullyingReport::class);
+        return $this->hasMany(BullyingReport::class, 'user_mhs_id');
     }
 
-    /**
-     * sarpras report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sarprasReport()
+    public function sarprasReports()
     {
-        return $this->hasMany(SaranaReport::class);
+        return $this->hasMany(SaranaReport::class, 'user_mhs_id');
     }
 
-    /**
-     * sexual report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sexualReport()
+    public function sexualReports()
     {
-        return $this->hasMany(SexualReport::class);
+        return $this->hasMany(SexualReport::class, 'user_mhs_id');
     }
 
-    /**
-     * avatar
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
     protected function avatar(): Attribute
     {
         return Attribute::make(
