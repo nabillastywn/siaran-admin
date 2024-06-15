@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (!auth()->check() || auth()->user()->role !== 0) {
-                return redirect('/login')->withErrors(['You are not authorized to access this page.']);
-            }
-            return $next($request);
-        });
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(function ($request, $next) {
+    //         if (!auth()->check() || auth()->user()->role !== 0) {
+    //             return redirect('/login')->withErrors(['You are not authorized to access this page.']);
+    //         }
+    //         return $next($request);
+    //     });
+    // }
 
     public function create()
     {

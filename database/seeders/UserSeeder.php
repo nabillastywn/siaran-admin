@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'username' => 'siaran',
             'name' => 'Siaran Admin',
             'email' => 'siaran@gmail.com',
-            'password' => Hash::make('siaran'), // Menggunakan bcrypt untuk enkripsi password
+            'password' => 'siaran', // Menggunakan bcrypt untuk enkripsi password
             'nim' => 'admin',
             'address' => '123 Admin St',
             'phone_number' => '1234567890',
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'name' => 'Siaran Admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'), // Menggunakan bcrypt untuk enkripsi password
+            'password' => 'admin', // Menggunakan bcrypt untuk enkripsi password
             'nim' => 'admin',
             'address' => '123 Admin St',
             'phone_number' => '1234567890',
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'username' => 'user_pic',
             'name' => 'User PIC',
             'email' => 'userpic@example.com',
-            'password' => Hash::make('password'), // Menggunakan bcrypt untuk enkripsi password
+            'password' => 'password', // Menggunakan bcrypt untuk enkripsi password
             'nim' => 'pic',
             'address' => '456 PIC Ave',
             'phone_number' => '1234567890',
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'username' => 'user_mhs',
             'name' => 'User Mahasiswa',
             'email' => 'usermhs@example.com',
-            'password' => Hash::make('password'), // Menggunakan bcrypt untuk enkripsi password
+            'password' => 'password', // Menggunakan bcrypt untuk enkripsi password
             'address' => '789 Mahasiswa Blvd',
             'phone_number' => '0987654321',
             'nim' => '123456789',

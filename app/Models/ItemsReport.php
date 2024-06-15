@@ -50,4 +50,10 @@ class ItemsReport extends Model
             get: fn ($value) => Carbon::parse($value)->format('d-M-Y H:i'),
         );
     }
+    public function scopeFromMahasiswa($query)
+    {
+        return $query->whereHas('user', function ($query) {
+            $query->where('role', 2);
+        });
+    }
 }

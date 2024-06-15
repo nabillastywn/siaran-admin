@@ -40,7 +40,9 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
 
 	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
-		Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+        Route::resource('/users', UserController::class, ['as' => 'admin'])->parameters(['users' => 'user']);
+
+		// Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 	Route::resource('/sarpras', SarprasController::class, ['as' => 'admin'])->parameters([
 			'sarpras' => 'sarpras'
 		]); 
@@ -54,23 +56,6 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 		Route::resource('/status', StatusController::class, ['as' => 'admin'])->parameters([
 			'status' => 'status'
 		]);
-
-		Route::get('/user-mhs', [UserMhsController::class, 'index'])->name('admin.user-mhs.index');
-		Route::get('/user-mhs/create', [UserMhsController::class, 'create'])->name('admin.user-mhs.create');
-		Route::post('/user-mhs', [UserMhsController::class, 'store'])->name('admin.user-mhs.store');
-		Route::get('/user-mhs/{userMhs}/edit', [UserMhsController::class, 'edit'])->name('admin.user-mhs.edit');
-		Route::put('/user-mhs/{userMhs}', [UserMhsController::class, 'update'])->name('admin.user-mhs.update');
-		Route::delete('/user-mhs/{userMhs}', [UserMhsController::class, 'destroy'])->name('admin.user-mhs.destroy');
-		Route::get('/user-mhs/{userMhs}', [UserMhsController::class, 'show'])->name('admin.user-mhs.show');
-		
-		// UserPic Routes
-		Route::get('/user-pic', [UserPicController::class, 'index'])->name('admin.user-pic.index');
-    Route::get('/user-pic/create', [UserPicController::class, 'create'])->name('admin.user-pic.create');
-    Route::post('/user-pic', [UserPicController::class, 'store'])->name('admin.user-pic.store');
-    Route::get('/user-pic/{userPic}/edit', [UserPicController::class, 'edit'])->name('admin.user-pic.edit');
-    Route::put('/user-pic/{userPic}', [UserPicController::class, 'update'])->name('admin.user-pic.update');
-    Route::delete('/user-pic/{userPic}', [UserPicController::class, 'destroy'])->name('admin.user-pic.destroy');
-    Route::get('/user-pic/{userPic}', [UserPicController::class, 'show'])->name('admin.user-pic.show');
 
 	Route::get('/bullying-report', [BullyingReportController::class, 'index'])->name('admin.bullying-report.index');
 	Route::get('admin/bullying-report/{bullyingReport}', [BullyingReportController::class, 'show'])->name('admin.bullying-report.show');

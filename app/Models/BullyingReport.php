@@ -12,17 +12,24 @@ class BullyingReport extends Model
     use HasFactory;
 
     protected $fillable = [
-       'user_mhs_id', 'location', 'date', 'description', 'attachment', 'slug', 'statuses_id'
+       'user_id', 'location', 'date', 'description', 'attachment', 'slug', 'status_id'
     ];
 
-    public function userMhs()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_mhs_id');
+        return $this->belongsTo(User::class);
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'statuses_id');
+        return $this->belongsTo(Status::class);
+    }
+
+    public function scopeFromMahasiswa($query)
+    {
+        return $query->whereHas('user', function ($query) {
+            $query->where('role', 2);
+        });
     }
 
     protected function attachment(): Attribute

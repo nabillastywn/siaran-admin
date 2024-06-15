@@ -8,8 +8,10 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Daftar User Mahasiswa</h6>
-                    <a href="{{ route('admin.user-mhs.create') }}" class="btn btn-primary btn-sm">Tambah User</a>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-1">Daftar User Mahasiswa</h6>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-sm">Tambah User</a>
+                    </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -19,9 +21,10 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Avatar
-                                    </th>
+                                        Avatar</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NIM
                                     </th>
@@ -29,7 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($userMhs as $user)
+                                @forelse ($users as $user)
                                 <tr>
                                     <td class="text-xs font-weight-bold mb-0">{{ $loop->iteration }}</td>
                                     <td class="text-xs font-weight-bold mb-0">
@@ -37,16 +40,25 @@
                                             style="max-width: 100px;">
                                     </td>
                                     <td class="text-xs font-weight-bold mb-0">{{ $user->name }}</td>
+                                    <td class="text-xs font-weight-bold mb-0">
+                                        @if ($user->role == 0)
+                                        Admin
+                                        @elseif ($user->role == 1)
+                                        PIC
+                                        @elseif ($user->role == 2)
+                                        Mahasiswa
+                                        @endif
+                                    </td>
                                     <td class="text-xs font-weight-bold mb-0">{{ $user->nim }}</td>
                                     <td class="text-xs font-weight-bold mb-0">
-                                        <a href="{{ route('admin.user-mhs.show', $user->id) }}"
+                                        <a href="{{ route('admin.users.show', $user->id) }}"
                                             class="btn btn-info btn-sm">Detail</a>
-                                        <a href="{{ route('admin.user-mhs.edit', $user->id) }}"
+                                        <a href="{{ route('admin.users.edit', $user->id) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
                                         <button onclick="confirmDelete('{{ $user->id }}')"
                                             class="btn btn-danger btn-sm">Hapus</button>
                                         <form id="delete-form-{{ $user->id }}"
-                                            action="{{ route('admin.user-mhs.destroy', $user->id) }}" method="POST"
+                                            action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                             style="display: none;">
                                             @csrf
                                             @method('DELETE')
@@ -55,13 +67,13 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="text-center text-xs font-weight-bold mb-0">Tidak ada data
+                                    <td colspan="6" class="text-center text-xs font-weight-bold mb-0">Tidak ada data
                                     </td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                        {{ $userMhs->links() }}
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>
@@ -70,14 +82,16 @@
 </div>
 
 <div class="px-4 pt-4">
-    @if ($message = session()->has('success'))
+    @if (session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <p class="text-white mb-0">{{ session()->get('success') }}</p>
+        <p class="text-white mb-0">{{ session('success') }}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    @if ($message = session()->has('error'))
-    <div class="alert alert-danger" role="alert">
-        <p class="text-white mb-0">{{ session()->get('error') }}</p>
+    @if (session()->has('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p class="text-white mb-0">{{ session('error') }}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
 </div>

@@ -60,22 +60,22 @@ class User extends Authenticatable
 
     public function itemsReports()
     {
-        return $this->hasMany(ItemsReport::class, 'user_mhs_id');
+        return $this->hasMany(ItemsReport::class, 'user_id');
     }
 
     public function bullyingReports()
     {
-        return $this->hasMany(BullyingReport::class, 'user_mhs_id');
+        return $this->hasMany(BullyingReport::class, 'user_id');
     }
 
     public function sarprasReports()
     {
-        return $this->hasMany(SaranaReport::class, 'user_mhs_id');
+        return $this->hasMany(SaranaReport::class, 'user_id');
     }
 
     public function sexualReports()
     {
-        return $this->hasMany(SexualReport::class, 'user_mhs_id');
+        return $this->hasMany(SexualReport::class, 'user_id');
     }
 
     protected function avatar(): Attribute
@@ -83,7 +83,7 @@ class User extends Authenticatable
         return Attribute::make(
             get: function ($value) {
                 $roleBasedPath = $this->isUserMhs() ? 'mahasiswa' : 'pic';
-                return $value ? asset("/storage/user/{$roleBasedPath}/" . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
+                return $value ? asset("/storage/user/" . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
             }
         );
     }

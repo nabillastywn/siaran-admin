@@ -15,12 +15,12 @@ class AdminMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
-    {
-        if (Auth::check() && Auth::user()->role === 0) {
-            return $next($request);
-        }
+    // public function handle(Request $request, Closure $next)
+    // {
+    //     if (Auth::check() && Auth::user()->role === 0) {
+    //         return $next($request);
+    //     }
 
-        return redirect('/login')->withErrors(['You are not authorized to access this page.']);
-    }
+    //     return redirect('/login')->withErrors(['You are not authorized to access this page.']);
+    // }
 }

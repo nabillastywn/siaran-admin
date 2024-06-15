@@ -12,17 +12,17 @@ class SexualReport extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_mhs_id', 'location', 'date', 'description', 'attachment', 'slug', 'statuses_id'
+        'user_id', 'location', 'date', 'description', 'attachment', 'slug', 'status_id'
     ];
 
-    public function userMhs()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_mhs_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'statuses_id');
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     protected function attachment(): Attribute
@@ -44,5 +44,12 @@ class SexualReport extends Model
         return Attribute::make(
             get: fn ($value) => Carbon::parse($value)->format('d-M-Y H:i'),
         );
+    }
+
+    public function scopeFromMahasiswa($query)
+    {
+        return $query->whereHas('user', function ($query) {
+            $query->where('role', 2);
+        });
     }
 }

@@ -42,10 +42,13 @@ class LoginController extends Controller
         // } catch (Exception $e) {
         //     dd($e);
         // }
-        
+        // dd($user->password);
+        // dd($request->password);
+        // $hashed = Hash::make($request->password);
 
         if (Hash::check($request->password, $user->password)) {
-            dd($user->role);
+
+            // dd($user->role);
             if ($user->role == 0) {
             // $request->session()->regenerate();
             Auth::login($user);
