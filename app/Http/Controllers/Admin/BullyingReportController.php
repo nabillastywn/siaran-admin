@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\BullyingReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class BullyingReportController extends Controller
         $title = 'Bullying Report';
 
         // Retrieve all bullying reports with related user information, ordered by the latest
-        $bullyingReports = BullyingReport::with('userMhs')->orderByDesc('created_at')->paginate(10);
+        $bullyingReports = BullyingReport::with('user')->orderByDesc('created_at')->paginate(10);
 
         // Pass the data to the view
         return view('pages.bullyingreport.index', compact('title', 'bullyingReports'));
@@ -35,7 +36,8 @@ class BullyingReportController extends Controller
         $title = 'Detail Bullying Report';
 
         // Check if the user can view this report based on their role
-        if (auth()->user()->role === 0 || auth()->user()->role === 1 || auth()->user()->id === $bullyingReport->user_id) {
+        $user = auth()->user();
+        if ($user->isAdmin() || $user->isUserPic() || $user->id === $bullyingReport->user_id) {
             return view('pages.bullyingreport.show', compact('title', 'bullyingReport'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -52,7 +54,7 @@ class BullyingReportController extends Controller
     public function updateStatus(Request $request, BullyingReport $bullyingReport)
     {
         // Check if the user can update status based on their role
-        if (auth()->user()->role === 1) {
+        if (auth()->user()->isUserPic()) {
             $this->validate($request, [
                 'status_id' => 'required|exists:statuses,id',
             ]);

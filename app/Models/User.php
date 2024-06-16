@@ -43,19 +43,22 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
+    const ADMIN_ROLE = 0;
     public function isAdmin()
     {
-        return $this->role == 0;
+        return $this->role == self::ADMIN_ROLE;
     }
 
+    const PIC_ROLE = 1;
     public function isUserPic()
     {
-        return $this->role == 1;
+        return $this->role == self::PIC_ROLE;
     }
 
+    const MAHASISWA_ROLE = 2;
     public function isUserMhs()
     {
-        return $this->role == 2;
+        return $this->role == self::MAHASISWA_ROLE;
     }
 
     public function itemsReports()

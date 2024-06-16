@@ -52,9 +52,9 @@ class SaranaReport extends Model
     }
 
     public function scopeFromMahasiswa($query)
-    {
-        return $query->whereHas('user', function ($query) {
-            $query->where('role', 2);
-        });
-    }
+{
+    return $query->whereHas('user', function ($query) {
+        $query->where('role', User::MAHASISWA_ROLE);
+    });
+}
 }
