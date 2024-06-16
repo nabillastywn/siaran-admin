@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\BullyingReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,7 +36,7 @@ class BullyingReportController extends Controller
 
         // Check if the user can view this report based on their role
         $user = auth()->user();
-        if ($user->isAdmin() || $user->isUserPic() || $user->id === $bullyingReport->user_id) {
+        if ($user->role === 0 || $user->role === 1 || $user->id === $bullyingReport->user_id) {
             return view('pages.bullyingreport.show', compact('title', 'bullyingReport'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -54,7 +53,7 @@ class BullyingReportController extends Controller
     public function updateStatus(Request $request, BullyingReport $bullyingReport)
     {
         // Check if the user can update status based on their role
-        if (auth()->user()->isUserPic()) {
+        if (auth()->user()->role === 1) {
             $this->validate($request, [
                 'status_id' => 'required|exists:statuses,id',
             ]);
