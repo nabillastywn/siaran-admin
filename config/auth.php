@@ -36,12 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-    ],
+   'web' => [
+      'driver' => 'session',
+      'provider' => 'users',
+   ],
 
+   'api' => [
+      'driver' => 'passport',		// <-- set ke "passport"
+      'provider' => 'users',		
+      'hash' => false,		
+   ],
+],
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -60,16 +65,11 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
-    ],
+   'users' => [
+       'driver' => 'eloquent',
+       'model' => App\Models\User::class,
+   ],
+],
 
     /*
     |--------------------------------------------------------------------------

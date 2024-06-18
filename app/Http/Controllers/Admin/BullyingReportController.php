@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\BullyingReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User; // Import User model
 
 class BullyingReportController extends Controller
 {
@@ -33,10 +34,11 @@ class BullyingReportController extends Controller
     public function show(BullyingReport $bullyingReport)
     {
         $title = 'Detail Bullying Report';
+        $userL = auth()->user();
 
+        $user = User::findOrFail($userL->id);
         // Check if the user can view this report based on their role
-        $user = auth()->user();
-        if ($user->role === 0 || $user->role === 1 || $user->id === $bullyingReport->user_id) {
+        if ($user->isAdmin() || $user->isUserPic() || $user->id === $bullyingReport->user_id) {
             return view('pages.bullyingreport.show', compact('title', 'bullyingReport'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -52,8 +54,12 @@ class BullyingReportController extends Controller
      */
     public function updateStatus(Request $request, BullyingReport $bullyingReport)
     {
+        // Retrieve authenticated user
+        $userL = auth()->user();
+
+        $user = User::findOrFail($userL->id);
         // Check if the user can update status based on their role
-        if (auth()->user()->role === 1) {
+        if ($user->isUserPic()) {
             $this->validate($request, [
                 'status_id' => 'required|exists:statuses,id',
             ]);
@@ -62,7 +68,7 @@ class BullyingReportController extends Controller
             $bullyingReport->save();
 
             return redirect()->route('bullying-reports.show', $bullyingReport->id)
-                             ->with('success', 'Status updated successfully.');
+                ->with('success', 'Status updated successfully.');
         } else {
             abort(403, 'Unauthorized action.');
         }

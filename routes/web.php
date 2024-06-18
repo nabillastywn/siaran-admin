@@ -80,5 +80,13 @@ Route::get('sexual-reports/{sexualReport}', [SexualReportController::class, 'sho
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+// Route::get('/debug-passport', function () {
+//     return [
+//         'passport_class_exists' => class_exists(\Laravel\Passport\Passport::class),
+//         'passport_routes_method_exists' => method_exists(\Laravel\Passport\Passport::class, 'routes'),
+//     ];
+// });
+
+
 Route::prefix('api')->group(function () {
 });

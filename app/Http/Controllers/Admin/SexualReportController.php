@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\SexualReport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User; // Import User model
 
 class SexualReportController extends Controller
 {
@@ -33,9 +34,11 @@ class SexualReportController extends Controller
     public function show(SexualReport $sexualReport)
     {
         $title = 'Detail Sexual Report';
+        $userL = auth()->user();
 
+        $user = User::findOrFail($userL->id);
         // Check if the user can view this report based on their role
-        if (auth()->user()->role === 0 || auth()->user()->role === 1 || auth()->user()->id === $sexualReport->user_id) {
+        if ($user->isAdmin() || $user->isUserPic() || $user->id === $sexualReport->user_id) {
             return view('pages.sexualreport.show', compact('title', 'sexualReport'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -51,8 +54,12 @@ class SexualReportController extends Controller
      */
     public function updateStatus(Request $request, SexualReport $sexualReport)
     {
+        // Retrieve authenticated user
+        $userL = auth()->user();
+
+        $user = User::findOrFail($userL->id);
         // Check if the user can update status based on their role
-        if (auth()->user()->role === 1) {
+        if ($user->isUserPic()) {
             $this->validate($request, [
                 'status_id' => 'required|exists:statuses,id',
             ]);
@@ -61,7 +68,7 @@ class SexualReportController extends Controller
             $sexualReport->save();
 
             return redirect()->route('sexual-reports.show', $sexualReport->id)
-                             ->with('success', 'Status updated successfully.');
+                ->with('success', 'Status updated successfully.');
         } else {
             abort(403, 'Unauthorized action.');
         }

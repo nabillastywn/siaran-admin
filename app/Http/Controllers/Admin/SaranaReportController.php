@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SaranaReport;
+use App\Models\User; // Import User model
 
 class SaranaReportController extends Controller
 {
@@ -33,9 +34,11 @@ class SaranaReportController extends Controller
     public function show(SaranaReport $saranaReport)
     {
         $title = 'Detail Sarana Report';
+        $userL = auth()->user();
 
+        $user = User::findOrFail($userL->id);
         // Check if the user can view this report based on their role
-        if (auth()->user()->role === 0 || auth()->user()->role === 1 || auth()->user()->id === $saranaReport->user_id) {
+        if ($user->isAdmin() || $user->isUserPic() || $user->id === $saranaReport->user_id) {
             return view('pages.saranareport.show', compact('title', 'saranaReport'));
         } else {
             abort(403, 'Unauthorized action.');
@@ -51,8 +54,12 @@ class SaranaReportController extends Controller
      */
     public function updateStatus(Request $request, SaranaReport $saranaReport)
     {
+        // Retrieve authenticated user
+        $userL = auth()->user();
+
+        $user = User::findOrFail($userL->id);
         // Check if the user can update status based on their role
-        if (auth()->user()->role === 1) {
+        if ($user->isUserPic()) {
             $this->validate($request, [
                 'status_id' => 'required|exists:statuses,id',
             ]);
@@ -61,7 +68,7 @@ class SaranaReportController extends Controller
             $saranaReport->save();
 
             return redirect()->route('sarana-reports.show', $saranaReport->id)
-                             ->with('success', 'Status updated successfully.');
+                ->with('success', 'Status updated successfully.');
         } else {
             abort(403, 'Unauthorized action.');
         }
