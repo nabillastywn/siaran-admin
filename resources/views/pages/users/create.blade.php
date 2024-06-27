@@ -14,10 +14,10 @@
                     <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ old('username') }}" required>
-                            @error('username')
+                            <label for="name" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
+                                required>
+                            @error('name')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

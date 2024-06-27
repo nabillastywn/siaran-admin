@@ -18,7 +18,7 @@ class ItemsReportController extends Controller
         $title = 'Items Report';
 
         // Retrieve all items reports with related user and lost item information, ordered by the latest
-        $itemsReports = ItemsReport::with(['userMhs', 'lostItem'])->orderByDesc('created_at')->paginate(10);
+        $itemsReports = ItemsReport::with(['user', 'lostItem'])->orderByDesc('created_at')->paginate(10);
 
         // Pass the data to the view
         return view('pages.itemsreport.index', compact('title', 'itemsReports'));

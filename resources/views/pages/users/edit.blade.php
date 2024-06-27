@@ -17,10 +17,10 @@
                         @method('PUT')
 
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ $user->username }}" required>
-                            @error('username')
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
+                                required>
+                            @error('name')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="phone_number" class="form-label">No. Telepon</label>
+                            <label for="phone_number" class="form-label">Phone Number</label>
                             <input type="text" class="form-control" id="phone_number" name="phone_number"
                                 value="{{ $user->phone_number }}" required>
                             @error('phone_number')
@@ -47,6 +47,15 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password">
                             @error('password')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="password_confirmation"
+                                name="password_confirmation">
+                            @error('password_confirmation')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -72,20 +81,26 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="avatar" class="form-label">Avatar</label>
                             <input type="file" class="form-control" id="avatar" name="avatar">
                             @if ($user->avatar)
                             <img src="{{ $user->avatar }}" alt="Avatar" class="img-thumbnail" style="max-width: 200px;">
                             @else
-                            <img src="{{ asset('storage/user/default-avatar.png') }}" alt="Default Avatar"
-                                class="img-thumbnail" style="max-width: 200px;">
+                            <img src="https://ui-avatars.com/api/?name={{ str_replace(' ', '+', $user->name) }}&background=4e73df&color=ffffff&size=100"
+                                alt="Default Avatar" class="img-thumbnail" style="max-width: 200px;">
                             @endif
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label for="avatar" class="form-label">Avatar</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar">
+                            <img src="{{$user->avatar }}" alt="Avatar" class="img-thumbnail" style="max-width: 200px;">
                         </div>
 
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
                 </div>

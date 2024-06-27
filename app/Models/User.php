@@ -84,9 +84,33 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: function ($value) {
-                $roleBasedPath = $this->isUserMhs() ? 'mahasiswa' : 'pic';
+                // Check if the stored value is already a full URL
+                if (strpos($value, 'http://') === 0 || strpos($value, 'https://') === 0) {
+                    return $value;
+                }
+    
+                // Otherwise, return the full URL
                 return $value ? asset("/storage/user/" . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
             }
         );
     }
+    
+
+// protected function avatar(): Attribute
+//     {
+//         return Attribute::make(
+//             get: fn ($value) => $value != '' ? asset("/storage/user/" . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100',
+//         );
+//     }
+
+
+// protected function avatar(): Attribute
+//     {
+//         return Attribute::make(
+//             get: function ($value) {
+//                 $roleBasedPath = $this->isUserMhs() ? 'mahasiswa' : 'pic';
+//                 return $value ? asset("/storage/user/" . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
+//             }
+//         );
+//     }
 }

@@ -38,6 +38,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
+	Route::get('password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
 
 	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
         Route::resource('/users', UserController::class, ['as' => 'admin'])->parameters(['users' => 'user']);

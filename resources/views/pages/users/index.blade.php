@@ -34,6 +34,7 @@
                             <tbody>
                                 @forelse ($users as $user)
                                 <tr>
+
                                     <td class="text-xs font-weight-bold mb-0">{{ $loop->iteration }}</td>
                                     <td class="text-xs font-weight-bold mb-0">
                                         <img src="{{ $user->avatar }}" alt="Avatar" class="img-thumbnail"

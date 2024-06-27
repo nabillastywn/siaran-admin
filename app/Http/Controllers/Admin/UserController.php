@@ -29,7 +29,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|unique:users',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'password_confirmation' => 'required|same:password',
@@ -48,7 +48,7 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'username' => $request->username,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone_number' => $request->phone_number,
@@ -70,42 +70,47 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user)
-    {
-        $this->validate($request, [
-            'username' => 'required|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|confirmed',
-            'phone_number' => 'required',
-            'nim' => 'required|unique:users,nim,' . $user->id,
-            'role' => 'required|in:0,1,2',
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2000',
-        ]);
+{
+    $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:8|confirmed',
+        'phone_number' => 'required',
+        'nim' => 'required|unique:users,nim,' . $user->id,
+        'role' => 'required|in:0,1,2',
+        'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2000',
+    ]);
 
-        $avatarName = $user->avatar;
+    // Simpan nama avatar saat ini
+    $avatarName = $user->avatar;
 
-        if ($request->hasFile('avatar')) {
-            Storage::delete('public/user/' . $avatarName);
-            $avatar = $request->file('avatar');
-            $avatarName = $avatar->hashName();
-            $avatar->storeAs('public/user', $avatarName);
-        }
+    // Jika ada file avatar yang diunggah
+    if ($request->hasFile('avatar')) {
+        // Hapus avatar lama dari storage
+        Storage::delete('public/user/' . $avatarName);
 
-        $user->update([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'phone_number' => $request->phone_number,
-            'nim' => $request->nim,
-            'role' => $request->role,
-            'avatar' => $avatarName,
-        ]);
-
-        if ($user) {
-            return redirect()->route('admin.users.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        } else {
-            return redirect()->route('admin.users.index')->with(['error' => 'Data Gagal Diupdate!']);
-        }
+        // Simpan avatar baru
+        $avatar = $request->file('avatar');
+        $avatarName = $avatar->hashName();
+        $avatar->storeAs('public/user', $avatarName);
     }
+
+    // Update informasi pengguna
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => $request->password ? Hash::make($request->password) : $user->password,
+        'phone_number' => $request->phone_number,
+        'nim' => $request->nim,
+        'role' => $request->role,
+        'avatar' => $avatarName, // Simpan nama avatar baru
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('admin.users.index')->with(['success' => 'Data Berhasil Diupdate!']);
+}
+
+
 
     public function destroy(User $user)
     {

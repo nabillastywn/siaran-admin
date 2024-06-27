@@ -40,7 +40,7 @@ class Status extends Model
      *
      * @return void
      */
-    public function sarprasReport()
+    public function saranaReport()
     {
         return $this->hasMany(SaranaReport::class);
     }

@@ -39,7 +39,7 @@
                                     <td class="text-xs font-weight-bold mb-0">
                                         {{ \Carbon\Carbon::parse($report->created_at)->format('d-M-Y H:i') }}</td>
                                     <td class="text-xs font-weight-bold mb-0">
-                                        <a href="{{ route('admin.items-reports.show', ['itemsReport' => $report->id]) }}"
+                                        <a href="{{ route('admin.items-report.show', ['itemsReport' => $report->id]) }}"
                                             class="btn btn-info btn-sm">Lihat Detail</a>
                                     </td>
                                 </tr>

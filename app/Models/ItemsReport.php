@@ -12,22 +12,22 @@ class ItemsReport extends Model
     use HasFactory;
 
     protected $fillable = [
-       'lost_items_id', 'user_mhs_id', 'location', 'date', 'name', 'description', 'attachment', 'slug', 'statuses_id'
+       'lost_item_id', 'user_id', 'location', 'date', 'name', 'description', 'attachment', 'slug', 'status_id'
     ];
 
     public function lostItem()
     {
-        return $this->belongsTo(LostItem::class, 'lost_items_id');
+        return $this->belongsTo(LostItem::class, 'lost_item_id');
     }
 
-    public function userMhs()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_mhs_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function status()
     {
-        return $this->belongsTo(Status::class, 'statuses_id');
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     protected function attachment(): Attribute
