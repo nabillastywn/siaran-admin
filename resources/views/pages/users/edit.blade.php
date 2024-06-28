@@ -35,10 +35,65 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                value="{{ $user->address }}">
+                            @error('address')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="phone_number" class="form-label">Phone Number</label>
                             <input type="text" class="form-control" id="phone_number" name="phone_number"
                                 value="{{ $user->phone_number }}" required>
                             @error('phone_number')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nim" class="form-label">NIM</label>
+                            <input type="text" class="form-control" id="nim" name="nim" value="{{ $user->nim }}"
+                                required>
+                            @error('nim')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="class" class="form-label">Class</label>
+                            <input type="text" class="form-control" id="class" name="class" value="{{ $user->class }}">
+                            @error('class')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="major" class="form-label">Major</label>
+                            <input type="text" class="form-control" id="major" name="major" value="{{ $user->major }}">
+                            @error('major')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="study_program" class="form-label">Study Program</label>
+                            <input type="text" class="form-control" id="study_program" name="study_program"
+                                value="{{ $user->study_program }}">
+                            @error('study_program')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>Admin</option>
+                                <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>PIC</option>
+                                <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Mahasiswa</option>
+                            </select>
+                            @error('role')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -61,27 +116,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="nim" class="form-label">NIM</label>
-                            <input type="text" class="form-control" id="nim" name="nim" value="{{ $user->nim }}"
-                                required>
-                            @error('nim')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-select" id="role" name="role" required>
-                                <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>Admin</option>
-                                <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>PIC</option>
-                                <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Mahasiswa</option>
-                            </select>
-                            @error('role')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- <div class="mb-3">
                             <label for="avatar" class="form-label">Avatar</label>
                             <input type="file" class="form-control" id="avatar" name="avatar">
                             @if ($user->avatar)
@@ -90,12 +124,6 @@
                             <img src="https://ui-avatars.com/api/?name={{ str_replace(' ', '+', $user->name) }}&background=4e73df&color=ffffff&size=100"
                                 alt="Default Avatar" class="img-thumbnail" style="max-width: 200px;">
                             @endif
-                        </div> -->
-
-                        <div class="mb-3">
-                            <label for="avatar" class="form-label">Avatar</label>
-                            <input type="file" class="form-control" id="avatar" name="avatar">
-                            <img src="{{$user->avatar }}" alt="Avatar" class="img-thumbnail" style="max-width: 200px;">
                         </div>
 
                         <div class="mb-3">

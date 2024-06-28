@@ -30,6 +30,14 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                value="{{ old('address') }}">
+                            @error('address')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="phone_number" class="form-label">No. Telepon</label>
                             <input type="text" class="form-control" id="phone_number" name="phone_number"
                                 value="{{ old('phone_number') }}" required>
@@ -42,6 +50,28 @@
                             <input type="text" class="form-control" id="nim" name="nim" value="{{ old('nim') }}"
                                 required>
                             @error('nim')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="class" class="form-label">Class</label>
+                            <input type="text" class="form-control" id="class" name="class" value="{{ old('class') }}">
+                            @error('class')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="major" class="form-label">Major</label>
+                            <input type="text" class="form-control" id="major" name="major" value="{{ old('major') }}">
+                            @error('major')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="study_program" class="form-label">Study Program</label>
+                            <input type="text" class="form-control" id="study_program" name="study_program"
+                                value="{{ old('study_program') }}">
+                            @error('study_program')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

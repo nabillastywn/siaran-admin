@@ -18,11 +18,12 @@
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slug
                                     </th>
-                                    <th class="text-secondary opacity-7">Aksi</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,8 +35,6 @@
                                     <td class="text-xs font-weight-bold mb-0">
                                         <a href="{{ route('admin.lost-item.edit', ['lostitem' => $item->id]) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
-
-
                                         <button onclick="confirmDelete('{{ $item->id }}')"
                                             class="btn btn-danger btn-sm">Hapus</button>
                                         <form id="delete-form-{{ $item->id }}"
@@ -55,6 +54,43 @@
                             </tbody>
                         </table>
                         {{ $lostitems->links() }}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                @if ($lostitems->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $lostitems->previousPageUrl() }}"
+                                        aria-label="Previous">&laquo;</a>
+                                </li>
+                                @endif
+
+                                @foreach ($lostitems->getUrlRange(1, $lostitems->lastPage()) as $page => $url)
+                                @if ($page == $lostitems->currentPage())
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ $page }}</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                                @endif
+                                @endforeach
+
+                                @if ($lostitems->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $lostitems->nextPageUrl() }}"
+                                        aria-label="Next">&raquo;</a>
+                                </li>
+                                @else
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                                </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

@@ -18,11 +18,12 @@
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slug
                                     </th>
-                                    <th class="text-secondary opacity-7">Aksi</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,13 +47,49 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-xs font-weight-bold mb-0">Tidak ada data
-                                    </td>
+                                    <td colspan="4" class="text-center text-xs font-weight-bold mb-0">No data found</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
                         {{ $sarpras->links() }}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                @if ($sarpras->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $sarpras->previousPageUrl() }}"
+                                        aria-label="Previous">&laquo;</a>
+                                </li>
+                                @endif
+
+                                @foreach ($sarpras->getUrlRange(1, $sarpras->lastPage()) as $page => $url)
+                                @if ($page == $sarpras->currentPage())
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ $page }}</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                                @endif
+                                @endforeach
+
+                                @if ($sarpras->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $sarpras->nextPageUrl() }}"
+                                        aria-label="Next">&raquo;</a>
+                                </li>
+                                @else
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                                </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -78,7 +115,7 @@
 function confirmDelete(id) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You cant take back your action!",
+        text: "You can't take back your action!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#EF7719',

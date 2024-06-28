@@ -18,20 +18,36 @@
                         <div class="col-md-9">
                             <table class="table table-striped">
                                 <tr>
-                                    <th>Username</th>
-                                    <td>{{ $user->username }}</td>
+                                    <th>Name</th>
+                                    <td>{{ $user->name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
                                     <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th>No. Telepon</th>
+                                    <th>Address</th>
+                                    <td>{{ $user->address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number</th>
                                     <td>{{ $user->phone_number }}</td>
                                 </tr>
                                 <tr>
                                     <th>NIM</th>
                                     <td>{{ $user->nim }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Class</th>
+                                    <td>{{ $user->class }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Major</th>
+                                    <td>{{ $user->major }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Study Program</th>
+                                    <td>{{ $user->study_program }}</td>
                                 </tr>
                                 <tr>
                                     <th>Role</th>

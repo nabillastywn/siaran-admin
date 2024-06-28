@@ -53,6 +53,43 @@
                             </tbody>
                         </table>
                         {{ $statuses->links() }}
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                @if ($statuses->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $statuses->previousPageUrl() }}"
+                                        aria-label="Previous">&laquo;</a>
+                                </li>
+                                @endif
+
+                                @foreach ($statuses->getUrlRange(1, $statuses->lastPage()) as $page => $url)
+                                @if ($page == $statuses->currentPage())
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ $page }}</span>
+                                </li>
+                                @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                                @endif
+                                @endforeach
+
+                                @if ($statuses->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $statuses->nextPageUrl() }}"
+                                        aria-label="Next">&raquo;</a>
+                                </li>
+                                @else
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                                </li>
+                                @endif
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
