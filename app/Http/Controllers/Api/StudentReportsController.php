@@ -9,6 +9,7 @@ use App\Models\SaranaReport;
 use App\Models\SexualReport;
 use App\Models\BullyingReport;
 use App\Models\ItemsReport;
+use Carbon\Carbon;
 
 class StudentReportsController extends Controller
 {
@@ -26,7 +27,22 @@ class StudentReportsController extends Controller
             // Fetch all Sarana Prasarana reports
             $saranaReports = SaranaReport::where('user_id', $user->id)
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->get()
+                ->map(function ($report) {
+                    return [
+                        'id' => $report->id,
+                        'sarpras_id' => $report->sarpras_id,
+                        'user_id' => $report->user_id,
+                        'location' => $report->location,
+                        'date' => $report->date,
+                        'description' => $report->report,
+                        'attachment' => $report->attachment ? asset('storage/report/sarpras/' . $report->attachment) : null,
+                        'slug' => $report->slug,
+                        'status_id' => $report->status_id,
+                        'created_at' => Carbon::parse($report->created_at)->format('d-M-Y H:i'),
+                        'updated_at' => Carbon::parse($report->updated_at)->format('d-M-Y H:i'),
+                    ];
+                });
 
             // Fetch all Sexual reports
             $sexualReports = SexualReport::where('user_id', $user->id)

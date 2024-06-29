@@ -50,7 +50,7 @@ class SaranaReportController extends Controller
                 'user_id' => $user->id,
                 'location' => $request->location,
                 'date' => $request->date,
-                'description' => $request->report,
+                'report' => $request->report,
                 'slug' => Str::slug($request->report . '-' . Carbon::now()->timestamp),
                 'status_id' => 1, // Assuming status_id 1 represents 'pending' status
             ];
@@ -66,10 +66,25 @@ class SaranaReportController extends Controller
             // Create the sarana report
             $saranaReport = SaranaReport::create($data);
 
+            // Transform the response data
+            $responseData = [
+                'id' => $saranaReport->id,
+                'sarpras_id' => $saranaReport->sarpras_id,
+                'user_id' => $saranaReport->user_id,
+                'location' => $saranaReport->location,
+                'date' => $saranaReport->date,
+                'description' => $saranaReport->report,
+                'attachment' => $saranaReport->attachment ? asset('storage/report/sarpras/' . $saranaReport->attachment) : null,
+                'slug' => $saranaReport->slug,
+                'status_id' => $saranaReport->status_id,
+                'created_at' => Carbon::parse($saranaReport->created_at)->format('d-M-Y H:i'),
+                'updated_at' => Carbon::parse($saranaReport->updated_at)->format('d-M-Y H:i'),
+            ];
+
             return response()->json([
                 'success' => true,
                 'message' => 'Sarana Report successfully created.',
-                'data' => $saranaReport,
+                'data' => $responseData,
             ], 201);
 
         } catch (\Exception $e) {
@@ -457,7 +472,4 @@ public function destroy($id)
         ], 500);
     }
 }
-
-
-
 }
