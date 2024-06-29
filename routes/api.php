@@ -117,4 +117,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/sarana-reports/{id}', [SaranaReportController::class, 'show']);
     Route::delete('sarana-reports/{id}', [SaranaReportController::class, 'destroy']);
 
+    Route::get('student-reports', [StudentReportsController::class, 'getAllReports']);
+
 });
