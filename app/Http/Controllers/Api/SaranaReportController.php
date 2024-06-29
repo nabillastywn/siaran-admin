@@ -50,7 +50,7 @@ class SaranaReportController extends Controller
                 'user_id' => $user->id,
                 'location' => $request->location,
                 'date' => $request->date,
-                'report' => $request->report,
+                'description' => $request->report,
                 'slug' => Str::slug($request->report . '-' . Carbon::now()->timestamp),
                 'status_id' => 1, // Assuming status_id 1 represents 'pending' status
             ];
@@ -162,7 +162,7 @@ class SaranaReportController extends Controller
                         ],
                     'location' => $report->location,
                     'date' => $report->date,
-                    'report' => $report->report,
+                    'description' => $report->report,
                     'attachment' => $report->attachment,
                     'slug' => $report->slug,
                     'status' => [
@@ -395,7 +395,7 @@ class SaranaReportController extends Controller
                 ],
                 'location' => $saranaReport->location,
                 'date' => $saranaReport->date,
-                'report' => $saranaReport->report,
+                'description' => $saranaReport->report,
                 'attachment' => $saranaReport->attachment,
                 'slug' => $saranaReport->slug,
                 'status' => [
