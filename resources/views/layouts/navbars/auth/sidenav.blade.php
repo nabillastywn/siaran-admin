@@ -23,7 +23,7 @@
             </li>
             <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
-                    <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                    <i class="fa fa-users" style="color: #f4645f;"></i>
                 </div>
                 <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">User Management</h6>
             </li>
@@ -32,7 +32,7 @@
                     href="{{ route('profile.show') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                        <i class="fa fa-user-circle-o text-dark text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
@@ -49,15 +49,18 @@
                 </a>
             </li>
 
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
+            <li class="nav-item mt-3 d-flex align-items-center">
+                <div class="ps-4">
+                    <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i>
+                </div>
+                <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">User Management</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('admin/sarpras*') ? 'active' : '' }}"
                     href="{{ route('admin.sarpras.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        <i class="ni ni-pin-3 text-warning text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Sarana Prasarana</span>
                 </a>
@@ -68,7 +71,7 @@
                     href="{{ route('admin.lost-item.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        <i class="ni ni-box-2 text-warning text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Lost Item Category</span>
                 </a>
@@ -79,7 +82,7 @@
                     href="{{ route('admin.status.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        <i class="ni ni-compass-04 text-warning text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Status</span>
                 </a>
@@ -90,7 +93,7 @@
                     href="{{ route('admin.bullying-report.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-collection text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Bullying Report</span>
                 </a>
@@ -101,7 +104,7 @@
                     href="{{ route('admin.items-report.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-square-pin text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Lost Item Report</span>
                 </a>
@@ -112,7 +115,7 @@
                     href="{{ route('admin.sarana-report.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-building text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Sarana Prasarana Report</span>
                 </a>
@@ -123,7 +126,7 @@
                     href="{{ route('admin.sexual-report.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-bullet-list-67 text-primary text-sm opacity-10"></i>
+                        <i class="ni ni-notification-70 text-primary text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Sexual Report</span>
                 </a>
