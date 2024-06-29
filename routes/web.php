@@ -24,8 +24,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\ResetPassword;
-use App\Http\Controllers\ChangePassword;            
+use App\Http\Controllers\PasswordController;         
             
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -33,13 +32,13 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('register.perform');
 	Route::get('/login', [LoginController::class, 'show'])->name('login');
 	Route::post('/login', [LoginController::class, 'login'])->name('login.perform');
-	Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
-	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
-	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
-	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
-	Route::get('password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
+Route::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm'])->middleware('guest')->name('password.request');
+	Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
+	Route::get('/reset-password/{token}', [PasswordController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
+	Route::post('/reset-password', [PasswordController::class, 'reset'])->middleware('guest')->name('password.update');
+
+	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
 
 	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
         Route::resource('/users', UserController::class, ['as' => 'admin'])->parameters(['users' => 'user']);
@@ -70,14 +69,8 @@ Route::get('sarana-report/{saranaReport}', [SaranaReportController::class, 'show
 
 Route::get('sexual-reports', [SexualReportController::class, 'index'])->name('admin.sexual-report.index');
 Route::get('sexual-reports/{sexualReport}', [SexualReportController::class, 'show'])->name('admin.sexual-report.show');
-
-	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
-	Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
-	Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+	Route::get('/profile', [UserProfileController::class, 'show'])->name('profile.show');
 	Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-	Route::get('/profile-static', [PageController::class, 'profile'])->name('profile-static'); 
-	Route::get('/sign-in-static', [PageController::class, 'signin'])->name('sign-in-static');
-	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
