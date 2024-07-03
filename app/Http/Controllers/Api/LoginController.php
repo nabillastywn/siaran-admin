@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class LoginController extends Controller
 {
@@ -30,6 +32,14 @@ class LoginController extends Controller
         try {
             // Get user by email
             $user = User::where('email', $request->email)->firstOrFail();
+
+            // Check if user has verified their email
+            if (!$user->hasVerifiedEmail()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email belum terverifikasi. Silakan periksa email Anda untuk tautan verifikasi.',
+                ], 401);
+            }
 
             // Validate password
             if (!Hash::check($request->password, $user->password)) {

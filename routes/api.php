@@ -25,6 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  */
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
 
 Route::post('password/forgot', [PasswordController::class, 'forgot']);

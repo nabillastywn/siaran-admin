@@ -7,15 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth; // Import Auth
 
 class RegisterController extends Controller
 {    
-    /**
-     * register
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function register(Request $request)
     {
         // Set validasi
@@ -50,13 +45,15 @@ class RegisterController extends Controller
             'avatar'        => $request->avatar,
             'role'          => User::MAHASISWA_ROLE, // Set role to Mahasiswa
         ]);
+
+        // Send email verification
+        $user->sendEmailVerificationNotification();
         
         // Return JSON
         return response()->json([
             'success' => true,
-            'message' => 'Register Berhasil!',
-            'data'    => $user,
-            'token'   => $user->createToken('authToken')->accessToken  
+            'message' => 'Register berhasil! Silahkan cek email untuk verifikasi.',
+            'data'    => $user
         ], 201);
     }
 }
