@@ -53,7 +53,7 @@
                 <div class="ps-4">
                     <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i>
                 </div>
-                <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">User Management</h6>
+                <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">Features</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('admin/sarpras*') ? 'active' : '' }}"
