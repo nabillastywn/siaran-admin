@@ -9,7 +9,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h6 class="mb-1">Daftar User Mahasiswa</h6>
+                        <h6 class="mb-1">Daftar User</h6>
                         <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-sm">Tambah User</a>
                     </div>
                 </div>
