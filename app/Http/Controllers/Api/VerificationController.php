@@ -12,7 +12,7 @@ class VerificationController extends Controller
      * Verify the user's email.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\View\View
      */
     public function verify(Request $request)
     {
@@ -21,17 +21,17 @@ class VerificationController extends Controller
 
         // Verify user's email
         if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
-            return response()->json(['message' => 'Invalid verification link'], 400);
+            return view('auth.result', ['status' => 'error', 'message' => 'Invalid verification link']);
         }
 
         // Check if email is already verified
         if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email already verified'], 200);
+            return view('auth.result', ['status' => 'info', 'message' => 'Email already verified']);
         }
 
         // Mark the user's email as verified
         $user->markEmailAsVerified();
 
-        return response()->json(['message' => 'Email successfully verified'], 200);
+        return view('auth.result', ['status' => 'success', 'message' => 'Email successfully verified']);
     }
 }

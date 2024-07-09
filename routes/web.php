@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,6 +39,7 @@ Route::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm'
 	Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
 	Route::get('/reset-password/{token}', [PasswordController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
 	Route::post('/reset-password', [PasswordController::class, 'reset'])->middleware('guest')->name('password.update');
+	Route::get('/api/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 
 	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
 
