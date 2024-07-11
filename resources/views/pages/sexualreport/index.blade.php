@@ -33,10 +33,17 @@
                                 @forelse ($sexualReports as $report)
                                 <tr>
                                     <td class="text-xs font-weight-bold mb-0">{{ $loop->iteration }}</td>
-                                    <td class="text-xs font-weight-bold mb-0">
+                                    <!-- <td class="text-xs font-weight-bold mb-0">
                                         @if ($report->attachment)
                                         <a href="{{ asset('storage/' . $report->attachment) }}" target="_blank">View
                                             Attachment</a>
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td> -->
+                                    <td class="text-xs font-weight-bold mb-0">
+                                        @if ($report->attachment)
+                                        <a href="{{ asset($report->attachment) }}" target="_blank">View Attachment</a>
                                         @else
                                         N/A
                                         @endif

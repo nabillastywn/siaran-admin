@@ -24,7 +24,7 @@ class BullyingReportController extends Controller
             'location' => 'required|string|max:255',
             'date' => 'required|date_format:Y-m-d',
             'description' => 'required|string',
-            'attachment' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'attachment' => 'nullable|mimes:jpeg,png,jpg,gif,svg,doc,docx,mp4,mp3,wav,pdf|max:20480',
         ]);
 
         if ($validator->fails()) {
@@ -53,12 +53,11 @@ class BullyingReportController extends Controller
                 'status_id' => 1, // Assuming status_id 1 represents 'pending' status
             ];
 
-            // Handle attachment upload if provided
             if ($request->hasFile('attachment')) {
-                $image = $request->file('attachment');
-                $imageName = $image->hashName();
-                $image->storeAs('public/report/bullying', $imageName);
-                $data['attachment'] = $imageName;
+                $file = $request->file('attachment');
+                $fileName = $file->hashName();
+                $file->storeAs('public/report/bullying', $fileName);
+                $data['attachment'] = $fileName;
             }
 
             // Create the bullying report
@@ -79,6 +78,8 @@ class BullyingReportController extends Controller
         }
     }
 
+    // Other methods...
+    
     /**
      * Display a listing of the resource for the authenticated user.
      *
@@ -117,11 +118,11 @@ class BullyingReportController extends Controller
                         'user' => [
                             'id' => $report->user->id,
                             'name' => $report->user->name,
-                            'email' =>$report->user->email,
+                            'email' => $report->user->email,
                             'address' => $report->user->address,
                             'phone_number' => $report->user->phone_number,
                             'class' => $report->user->class,
-                            'major' =>$report->user->major,
+                            'major' => $report->user->major,
                             'study_program' => $report->user->study_program,
                         ],
                         'location' => $report->location,
@@ -147,6 +148,7 @@ class BullyingReportController extends Controller
             ], 500);
         }
     }
+    
     /**
      * Update the status of the specified resource in storage.
      *
@@ -225,7 +227,7 @@ class BullyingReportController extends Controller
                             'address' => $bullyingReport->user->address,
                             'phone_number' => $bullyingReport->user->phone_number,
                             'class' => $bullyingReport->user->class,
-                            'major' =>$bullyingReport->user->major,
+                            'major' => $bullyingReport->user->major,
                             'study_program' => $bullyingReport->user->study_program,
                         ],
                         'location' => $bullyingReport->location,
@@ -244,7 +246,7 @@ class BullyingReportController extends Controller
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'You are unauthorized to view this Bullying Report.',
+                    'message' => 'Unauthorized to view this Bullying Report.',
                 ], 403);
             }
 
@@ -252,47 +254,6 @@ class BullyingReportController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch Bullying Report details.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function destroy($id)
-    {
-        try {
-            $userL = auth()->guard('api')->user();
-            $user = User::findOrFail($userL->id);
-
-            // Find the Bullying Report by ID
-            $bullyingReport = BullyingReport::findOrFail($id);
-
-            // Check if the report belongs to the authenticated user and if its status is '1' (pending)
-            if ($bullyingReport->user_id !== $user->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized to delete this Bullying Report.',
-                ], 403);
-            }
-
-            if ($bullyingReport->status_id !== 1) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Bullying Report cannot be deleted as it is already being processed.',
-                ], 403);
-            }
-
-            // Delete the report
-            $bullyingReport->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Bullying Report successfully deleted.',
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete Bullying Report.',
                 'error' => $e->getMessage(),
             ], 500);
         }

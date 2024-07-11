@@ -25,7 +25,7 @@ class SaranaReportController extends Controller
             'location' => 'required|string|max:255',
             'date' => 'required|date_format:Y-m-d',
             'report' => 'required|string',
-            'attachment' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'attachment' => 'nullable|mimes:jpeg,png,jpg,gif,svg,doc,docx,mp4,mp3,wav,pdf|max:20480',
         ]);
 
         if ($validator->fails()) {

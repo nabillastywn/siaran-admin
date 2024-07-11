@@ -26,7 +26,7 @@ class ItemsReportController extends Controller
             'date' => 'required|date_format:Y-m-d',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'attachment' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'attachment' => 'nullable|mimes:jpeg,png,jpg,gif,svg,doc,docx,mp4,mp3,wav,pdf|max:20480',
         ]);
 
         if ($validator->fails()) {
