@@ -66,34 +66,34 @@
                                         value="{{ old('phone_number', auth()->user()->phone_number) }}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">NIM</label>
                                     <input class="form-control" type="text" name="nim"
                                         value="{{ old('nim', auth()->user()->nim) }}">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Class</label>
                                     <input class="form-control" type="text" name="class"
                                         value="{{ old('class', auth()->user()->class) }}">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Major</label>
                                     <input class="form-control" type="text" name="major"
                                         value="{{ old('major', auth()->user()->major) }}">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
+                            </div> -->
+                            <!-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Study Program</label>
                                     <input class="form-control" type="text" name="study_program"
                                         value="{{ old('study_program', auth()->user()->study_program) }}">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Avatar</label>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <hr class="horizontal dark">
-                        <p class="text-uppercase text-sm">About me</p>
+                        <!-- <p class="text-uppercase text-sm">About me</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -122,7 +122,7 @@
                                         value="{{ old('about', auth()->user()->about) }}">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
             </div>

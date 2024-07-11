@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sarana Prasarana</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Facility Reports</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $sarpras }}
                                 </h5>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sexual Harrasment</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sexual Reports</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $sexual }}
                                 </h5>

@@ -31,6 +31,6 @@ class AllReportsChart
             ->setTitle('Total Reports')
             ->setSubtitle('All Reports Sent to SIARAN System')
             ->addData($data)
-            ->setLabels(['Bullying Reports', 'Items Reports', 'Sarana Reports', 'Sexual Reports']);
+            ->setLabels(['Bullying Reports', 'Items Reports', 'Facility Reports', 'Sexual Reports']);
     }
 }
