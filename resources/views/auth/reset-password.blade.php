@@ -102,7 +102,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8000/api/password/reset',
+                url: 'https://siaranpolines.site/api/password/reset',
                 data: formData,
                 success: function(response) {
                     // Handle success response (e.g., show success message)
