@@ -41,42 +41,35 @@ Route::get('/forgot-password', [PasswordController::class, 'showLinkRequestForm'
 	Route::post('/reset-password', [PasswordController::class, 'reset'])->middleware('guest')->name('password.update');
 	Route::get('/api/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('auth');
+// routes/web.php
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('no.cache');
 
-	Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'admin'], function () {
         Route::resource('/users', UserController::class, ['as' => 'admin'])->parameters(['users' => 'user']);
-
-		// Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-	Route::resource('/sarpras', SarprasController::class, ['as' => 'admin'])->parameters([
-			'sarpras' => 'sarpras'
-		]); 
-		Route::get('/lost-item', [LostItemController::class, 'index'])->name('admin.lost-item.index');
-		Route::get('/lost-item/create', [LostItemController::class, 'create'])->name('admin.lost-item.create');
-		Route::post('/lost-item', [LostItemController::class, 'store'])->name('admin.lost-item.store'); // Route for store
-		Route::get('/lost-item/{lostitem}/edit', [LostItemController::class, 'edit'])->name('admin.lost-item.edit');
-		Route::put('/lost-item/{lostitem}', [LostItemController::class, 'update'])->name('admin.lost-item.update');
-		Route::delete('/lost-item/{lostitem}', [LostItemController::class, 'destroy'])->name('admin.lost-item.destroy');
-		
-		Route::resource('/status', StatusController::class, ['as' => 'admin'])->parameters([
-			'status' => 'status'
-		]);
-
-	Route::get('/bullying-report', [BullyingReportController::class, 'index'])->name('admin.bullying-report.index');
-	Route::get('admin/bullying-report/{bullyingReport}', [BullyingReportController::class, 'show'])->name('admin.bullying-report.show');
-
-	Route::get('items-reports', [ItemsReportController::class, 'index'])->name('admin.items-report.index');
-    Route::get('items-reports/{itemsReport}', [ItemsReportController::class, 'show'])->name('admin.items-report.show');
-
-	Route::get('sarana-report', [SaranaReportController::class, 'index'])->name('admin.sarana-report.index');
-Route::get('sarana-report/{saranaReport}', [SaranaReportController::class, 'show'])->name('admin.sarana-report.show');
-
-Route::get('sexual-reports', [SexualReportController::class, 'index'])->name('admin.sexual-report.index');
-Route::get('sexual-reports/{sexualReport}', [SexualReportController::class, 'show'])->name('admin.sexual-report.show');
-	Route::get('/profile', [UserProfileController::class, 'show'])->name('profile.show');
-	Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-	Route::get('/{page}', [PageController::class, 'index'])->name('page');
-	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+        Route::resource('/sarpras', SarprasController::class, ['as' => 'admin'])->parameters(['sarpras' => 'sarpras']);
+        Route::get('/lost-item', [LostItemController::class, 'index'])->name('admin.lost-item.index');
+        Route::get('/lost-item/create', [LostItemController::class, 'create'])->name('admin.lost-item.create');
+        Route::post('/lost-item', [LostItemController::class, 'store'])->name('admin.lost-item.store');
+        Route::get('/lost-item/{lostitem}/edit', [LostItemController::class, 'edit'])->name('admin.lost-item.edit');
+        Route::put('/lost-item/{lostitem}', [LostItemController::class, 'update'])->name('admin.lost-item.update');
+        Route::delete('/lost-item/{lostitem}', [LostItemController::class, 'destroy'])->name('admin.lost-item.destroy');
+        Route::resource('/status', StatusController::class, ['as' => 'admin'])->parameters(['status' => 'status']);
+        Route::get('/bullying-report', [BullyingReportController::class, 'index'])->name('admin.bullying-report.index');
+        Route::get('admin/bullying-report/{bullyingReport}', [BullyingReportController::class, 'show'])->name('admin.bullying-report.show');
+        Route::get('items-reports', [ItemsReportController::class, 'index'])->name('admin.items-report.index');
+        Route::get('items-reports/{itemsReport}', [ItemsReportController::class, 'show'])->name('admin.items-report.show');
+        Route::get('sarana-report', [SaranaReportController::class, 'index'])->name('admin.sarana-report.index');
+        Route::get('sarana-report/{saranaReport}', [SaranaReportController::class, 'show'])->name('admin.sarana-report.show');
+        Route::get('sexual-reports', [SexualReportController::class, 'index'])->name('admin.sexual-report.index');
+        Route::get('sexual-reports/{sexualReport}', [SexualReportController::class, 'show'])->name('admin.sexual-report.show');
+        Route::get('/profile', [UserProfileController::class, 'show'])->name('profile.show');
+        Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
+        Route::get('/{page}', [PageController::class, 'index'])->name('page');
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    });
 });
+
 
 // Route::get('/debug-passport', function () {
 //     return [

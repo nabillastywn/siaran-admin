@@ -37,6 +37,11 @@ class UserController extends Controller
             'nim' => 'required|unique:users',
             'role' => 'required|in:0,1,2',
             'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2000',
+
+            'class' => 'nullable|string|max:255',
+            'major' => 'nullable|string|max:255',
+            'study_program' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
         ]);
 
         $avatarName = null;
@@ -54,6 +59,10 @@ class UserController extends Controller
             'phone_number' => $request->phone_number,
             'nim' => $request->nim,
             'role' => $request->role,
+            'class' => $request->class,
+            'major' => $request->major,
+            'study_program' => $request->study_program,
+            'address' => $request->address,
             'avatar' => $avatarName,
         ]);
 
@@ -79,6 +88,11 @@ class UserController extends Controller
         'nim' => 'required|unique:users,nim,' . $user->id,
         'role' => 'required|in:0,1,2',
         'avatar' => 'nullable|image|mimes:jpeg,jpg,png|max:2000',
+
+        'class' => 'nullable|string|max:255',
+        'major' => 'nullable|string|max:255',
+        'study_program' => 'nullable|string|max:255',
+        'address' => 'nullable|string|max:255',
     ]);
 
     // Simpan nama avatar saat ini
@@ -103,6 +117,10 @@ class UserController extends Controller
         'phone_number' => $request->phone_number,
         'nim' => $request->nim,
         'role' => $request->role,
+        'class' => $request->class,
+        'major' => $request->major,
+        'study_program' => $request->study_program,
+        'address' => $request->address,
         'avatar' => $avatarName, // Simpan nama avatar baru
     ]);
 

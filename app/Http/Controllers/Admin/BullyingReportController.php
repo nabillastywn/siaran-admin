@@ -52,25 +52,25 @@ class BullyingReportController extends Controller
      * @param  \App\Models\BullyingReport  $bullyingReport
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus(Request $request, BullyingReport $bullyingReport)
-    {
-        // Retrieve authenticated user
-        $userL = auth()->user();
+    // public function updateStatus(Request $request, BullyingReport $bullyingReport)
+    // {
+    //     // Retrieve authenticated user
+    //     $userL = auth()->user();
 
-        $user = User::findOrFail($userL->id);
-        // Check if the user can update status based on their role
-        if ($user->isUserPic()) {
-            $this->validate($request, [
-                'status_id' => 'required|exists:statuses,id',
-            ]);
+    //     $user = User::findOrFail($userL->id);
+    //     // Check if the user can update status based on their role
+    //     if ($user->isUserPic()) {
+    //         $this->validate($request, [
+    //             'status_id' => 'required|exists:statuses,id',
+    //         ]);
 
-            $bullyingReport->status_id = $request->status_id;
-            $bullyingReport->save();
+    //         $bullyingReport->status_id = $request->status_id;
+    //         $bullyingReport->save();
 
-            return redirect()->route('bullying-reports.show', $bullyingReport->id)
-                ->with('success', 'Status updated successfully.');
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
-    }
+    //         return redirect()->route('bullying-reports.show', $bullyingReport->id)
+    //             ->with('success', 'Status updated successfully.');
+    //     } else {
+    //         abort(403, 'Unauthorized action.');
+    //     }
+    // }
 }

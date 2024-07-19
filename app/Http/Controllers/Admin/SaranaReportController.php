@@ -52,25 +52,25 @@ class SaranaReportController extends Controller
      * @param SaranaReport $saranaReport
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateStatus(Request $request, SaranaReport $saranaReport)
-    {
-        // Retrieve authenticated user
-        $userL = auth()->user();
+    // public function updateStatus(Request $request, SaranaReport $saranaReport)
+    // {
+    //     // Retrieve authenticated user
+    //     $userL = auth()->user();
 
-        $user = User::findOrFail($userL->id);
-        // Check if the user can update status based on their role
-        if ($user->isUserPic()) {
-            $this->validate($request, [
-                'status_id' => 'required|exists:statuses,id',
-            ]);
+    //     $user = User::findOrFail($userL->id);
+    //     // Check if the user can update status based on their role
+    //     if ($user->isUserPic()) {
+    //         $this->validate($request, [
+    //             'status_id' => 'required|exists:statuses,id',
+    //         ]);
 
-            $saranaReport->status_id = $request->status_id;
-            $saranaReport->save();
+    //         $saranaReport->status_id = $request->status_id;
+    //         $saranaReport->save();
 
-            return redirect()->route('sarana-reports.show', $saranaReport->id)
-                ->with('success', 'Status updated successfully.');
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
-    }
+    //         return redirect()->route('sarana-reports.show', $saranaReport->id)
+    //             ->with('success', 'Status updated successfully.');
+    //     } else {
+    //         abort(403, 'Unauthorized action.');
+    //     }
+    // }
 }
